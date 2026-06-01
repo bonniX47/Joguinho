@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Game</title>
+</head>
+<body style="margin: 0;">
+
+    <div class="imagem">
+        <img src="https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/cW5lDBG/videoblocks-digital-animation-in-1990-s-retro-style-the-colored-video-game-commands-such-as-game-over-try-again-insert-coin-press-start-time-out-are-given-in-the-black-background-luma-matte-included_bpspaj9uw_thumbnail-1080_01.png"
+             alt="Imagem de Fundo"
+             style="width: 100%; height: 100vh; object-fit: cover;">
+    </div>
+
+    <div class="GameOver"
+         style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+         ">
+        <h1 style="color: red;">Você não coletou 10 materiais!</h1>
+
+        <button onclick="window.location.href = 'MENU.html';"
+                style="
+                    border: 2px solid #ff0000;
+                    padding: 10px 20px;
+                    font-size: 18px;
+                ">
+            Tente Novamente
+        </button>
+    </div>
+
+</body>
+</html>

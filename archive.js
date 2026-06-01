@@ -40,6 +40,14 @@ var gameOver = false;
 document.addEventListener('keydown', e => teclas[e.key] = true);
 document.addEventListener('keyup', e => teclas[e.key] = false);
 
+function GameOver() {
+    window.location.href = 'GameOver.html';
+}
+
+function YouWin() {
+    window.location.href = 'YouWin.html';
+}
+
 function animate() {
     requestAnimationFrame(animate);
     if (gameOver) return;
@@ -134,17 +142,15 @@ function animate() {
     }
 
     if (totalFalls >= 15) {
-        gameOver = true;
         estojo.font = "60px Arial";
         estojo.textAlign = "center";
         if (pontos >= obj) {
-            estojo.fillStyle = "green";
-            estojo.fillText("VOCÊ VENCEU! você conseguiu pegar todos os materiais!", canvas.width/2, canvas.height/2);
+            YouWin();
         } else {
-            estojo.fillStyle = "red";
-            estojo.fillText("VOCÊ PERDEU! faltou " + (obj - pontos) + " pontos", canvas.width/2, canvas.height/2);
+            GameOver();
         }
-    }
+    } 
+
 }
 
 
