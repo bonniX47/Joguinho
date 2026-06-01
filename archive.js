@@ -32,29 +32,24 @@ var reguaX = Math.random()*1200;
 var reguaY = 40;
 var velRegua = 2;
 
-var pontost = 0;
-var obj = 15; 
 var pontos = 0;
+var obj = 15;
+var totalFalls = 0;
+var gameOver = false;
 
 document.addEventListener('keydown', e => teclas[e.key] = true);
 document.addEventListener('keyup', e => teclas[e.key] = false);
 
 function animate() {
     requestAnimationFrame(animate);
+    if (gameOver) return;
 
     estojo.clearRect(0, 0, canvas.width, canvas.height);
-     if (pontos >= obj) {
-        console.log("Parabéns! Você alcançou a quantidade total de pontos");
-    } else {
-        console.log("Você conseguiu " + pontos + " pontos, faltam " + (obj - pontos));
-    } 
 
     mesa1.fillStyle = 'brown';
     mesa1.fillRect(40, 70, 700, 50);
-
     mesa2.fillStyle = 'brown';
-    mesa2.fillRect(820, 70, 700, 50); 
-
+    mesa2.fillRect(820, 70, 700, 50);
     perna1.fillStyle = 'black';
     perna1.fillRect(40, 120, 80, 400);
     perna2.fillStyle = 'black';
@@ -63,14 +58,11 @@ function animate() {
     perna3.fillRect(820, 120, 80, 400);
     perna4.fillStyle = 'black';
     perna4.fillRect(1440, 120, 80, 400);
-
     piso.fillStyle = 'gray';
-    piso.fillRect(0, 450, 2000, 400); 
+    piso.fillRect(0, 450, 2000, 400);
 
-    if (teclas['ArrowLeft']) 
-        x -= 15;
-    if (teclas['ArrowRight'])
-         x += 15;
+    if (teclas['ArrowLeft']) x -= 15;
+    if (teclas['ArrowRight']) x += 15;
 
     estojo.fillStyle = "purple";
     estojo.fillRect(x, 500, 200, 100);
@@ -79,6 +71,7 @@ function animate() {
     borrachaY += velBorracha;
 
     if (borrachaY > 550) {
+        totalFalls++;
         borrachaY = 40;
         borrachaX = Math.random() * (canvas.width - 50);
         velBorracha = 0;
@@ -87,9 +80,12 @@ function animate() {
     borrachaCtx.fillStyle = "pink";
     borrachaCtx.fillRect(borrachaX, borrachaY, 50, 30);
 
-    if (x < borrachaX + 50 && x + 200 > borrachaX && 500 < borrachaY + 30) {
+    if (x < borrachaX + 50 && x + 200 > borrachaX &&
+        borrachaY < 600 && borrachaY + 30 > 500) {
+        pontos++;
+        totalFalls++;
         borrachaY = 40;
-        borrachaX = Math.random()*(canvas.width - 50);
+        borrachaX = Math.random() * (canvas.width - 50);
         velBorracha = 0;
     }
 
@@ -97,6 +93,7 @@ function animate() {
     lapisY += velLapis;
 
     if (lapisY > 550) {
+        totalFalls++;
         lapisY = 40;
         lapisX = Math.random() * (canvas.width - 50);
         velLapis = 0;
@@ -105,16 +102,20 @@ function animate() {
     lapisCtx.fillStyle = "yellow";
     lapisCtx.fillRect(lapisX, lapisY, 20, 60);
 
-    if (x < lapisX + 20 && x + 200 > lapisX && 500 < lapisY + 60) {
+    if (x < lapisX + 20 && x + 200 > lapisX &&
+        lapisY < 600 && lapisY + 60 > 500) {
+        pontos++;
+        totalFalls++;
         lapisY = 40;
-        lapisX = Math.random()*(canvas.width - 20);
+        lapisX = Math.random() * (canvas.width - 20);
         velLapis = 0;
     }
- 
+
     velRegua += gravidade;
     reguaY += velRegua;
 
     if (reguaY > 550) {
+        totalFalls++;
         reguaY = 40;
         reguaX = Math.random() * (canvas.width - 100);
         velRegua = 0;
@@ -123,11 +124,28 @@ function animate() {
     reguaCtx.fillStyle = "blue";
     reguaCtx.fillRect(reguaX, reguaY, 100, 20);
 
-    if (x < reguaX + 100 && x + 200 > reguaX && 500 < reguaY + 20) {
+    if (x < reguaX + 100 && x + 200 > reguaX &&
+        reguaY < 600 && reguaY + 20 > 500) {
+        pontos++;
+        totalFalls++;
         reguaY = 40;
-        reguaX = Math.random()*(canvas.width - 100);
+        reguaX = Math.random() * (canvas.width - 100);
         velRegua = 0;
     }
+
+    if (totalFalls >= 15) {
+        gameOver = true;
+        estojo.font = "60px Arial";
+        estojo.textAlign = "center";
+        if (pontos >= obj) {
+            estojo.fillStyle = "green";
+            estojo.fillText("VOCÊ VENCEU! você conseguiu pegar todos os materiais!", canvas.width/2, canvas.height/2);
+        } else {
+            estojo.fillStyle = "red";
+            estojo.fillText("VOCÊ PERDEU! faltou " + (obj - pontos) + " pontos", canvas.width/2, canvas.height/2);
+        }
+    }
 }
+
 
 animate(); 
