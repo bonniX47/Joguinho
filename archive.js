@@ -32,6 +32,10 @@ var reguaX = Math.random()*1200;
 var reguaY = 40;
 var velRegua = 2;
 
+var pontost = 0;
+var obj = 15; 
+var pontos = 0;
+
 document.addEventListener('keydown', e => teclas[e.key] = true);
 document.addEventListener('keyup', e => teclas[e.key] = false);
 
@@ -39,12 +43,17 @@ function animate() {
     requestAnimationFrame(animate);
 
     estojo.clearRect(0, 0, canvas.width, canvas.height);
+     if (pontos >= obj) {
+        console.log("Parabéns! Você alcançou a quantidade total de pontos");
+    } else {
+        console.log("Você conseguiu " + pontos + " pontos, faltam " + (obj - pontos));
+    } 
 
     mesa1.fillStyle = 'brown';
     mesa1.fillRect(40, 70, 700, 50);
 
     mesa2.fillStyle = 'brown';
-    mesa2.fillRect(820, 70, 700, 50);
+    mesa2.fillRect(820, 70, 700, 50); 
 
     perna1.fillStyle = 'black';
     perna1.fillRect(40, 120, 80, 400);
@@ -56,7 +65,7 @@ function animate() {
     perna4.fillRect(1440, 120, 80, 400);
 
     piso.fillStyle = 'gray';
-    piso.fillRect(0, 450, 2000, 400);
+    piso.fillRect(0, 450, 2000, 400); 
 
     if (teclas['ArrowLeft']) 
         x -= 15;
@@ -121,4 +130,4 @@ function animate() {
     }
 }
 
-animate();
+animate(); 
